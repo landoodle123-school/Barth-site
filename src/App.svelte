@@ -1,6 +1,11 @@
+<!--Welcome to the Barth Site Source Code!-->
+<!--It is a legacy Svelte format, and no, I am not migrating it to Svelte 5 syntax.-->
+<!---->
+<!--Most styles are in app.css.-->
 <script>
   import Navbar from './lib/Navbar.svelte';
 
+  // define vars
   let count = 0;
   let amountGained = 1;
   let clickerCount = 0;
@@ -31,7 +36,7 @@
     localStorage.setItem('clickerGain', clickerGain.toString());
     console.log('State saved:', { count, clickerCount, clickerCost, multiplierCost, clickerMultiplierCost, amountGained, clickerGain });
   }
-
+  // This function initiates a clicker
   function startClicker() {
     const interval = setInterval(() => {
       count += clickerGain;
@@ -94,7 +99,7 @@
       saveState();
     } else {
       confirmReset = true;
-      setTimeout(() => (confirmReset = false), 3000); // Reset confirmation after 3 seconds
+      setTimeout(() => { confirmReset = false; }, 3000); //reset confirmation after 3 seconds
     }
   }
 
@@ -157,7 +162,7 @@
   .resetbutton {
     background-color: red;
     color: white;
-    font-family: Inter, system-ui, Avenir, Helvetica, Arial, sans-serif;
+    font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
     border: none;
     border-radius: 25px;
     padding: 10px 20px;
