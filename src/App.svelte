@@ -5,6 +5,31 @@
 <script>
   import Navbar from './lib/Navbar.svelte';
 
+  // --- DevTools script execution detection ---
+const originalEval = window.eval;
+window.eval = function(...args) {
+  alert('Script execution detected! The page will refresh.');
+  setTimeout(() => location.reload(), 100);
+  throw new Error('Script execution detected!');
+};
+
+const originalConsole = { ...console };
+['log', 'warn', 'error', 'info', 'debug'].forEach(method => {
+  console[method] = function(...args) {
+    if (
+      args.some(arg =>
+        typeof arg === 'string' &&
+        /devtools|tamper|script|hack|eval|injected/i.test(arg)
+      )
+    ) {
+      alert('Suspicious console usage detected! The page will refresh.');
+      setTimeout(() => location.reload(), 100);
+      throw new Error('Suspicious console usage detected!');
+    }
+    return originalConsole[method].apply(console, args);
+  };
+});
+
   // define vars
   let count = 0;
   let amountGained = 1;
